@@ -1,7 +1,34 @@
 #!/usr/bin/env python3
 
+## TODO:
+# *) Use argparse for parsing cli arguments
+# *) [D] Convert to python3
+# *) [D] Use papersize module
+# *) [D] Option to print supported papers and their sizes
+# *) [D] Add more paper sizes - probably not required any more, since users
+#       can input their desired size in the form 'width x height unit'.
+# *) [W] Modify code such that output is (md_width + margin) 
+#       x (md_height + margin). Otherwise the final product is smaller 
+#    than desired. Check what the poster command does.
+#    [Won't fix]: Final output of postscript file generated via poster 
+#    command seems to be also smaller than the mediasize due to margin.
+# *) [D] Check the compatibility of the code with PyPDF2 -> Fully compatibile.
+# *) [D] Margin is only required for left and bottom part. 
+#       Modify code accordingly.
+# *) [D] Create a function to choose smaller of two lengths: xscale, yscale
+# *) [D] Margin lines: Some lines appear darker than others. 
+#       Why? Not always though. Minor bug. 
+#       -> Above behaviour vanished in version 0.4
+# *) [D] Write HelpText
+# *) [D] Check with input pdf version 1.5
+# *) [D] Write docstring for all functions
+# *) [D] Clean up
+# *) [D] Canvas size support for other page sizes 
+# *) [D] fit2size subroutine
+# *) [D] check_args subroutine
+
 # To make the program compatible with python2
-# from __future__ import print_function 
+from __future__ import print_function 
 import sys
 import os
 import re
@@ -155,7 +182,7 @@ def get_margin(md_dim, ct_prcnt, usr_mrgn = None):
         mrgn = get_percent_margin(md_dim,ct_prcnt) 
 
     mrgn = round(mrgn,2)
-    return mrgn
+    return float(mrgn)
 
 
 def draw_margins(pgwidth,pgheight,allx,ally,aurx,aury,mrgn,i,j):
@@ -387,10 +414,10 @@ def helptext(sname,athr,ver,md_dflt,ct_prcnt):
     print("")
     print("Options:")
     print("-h|--help          Show this help and exit.")
-    print("-p|--poster        Specify poster size. Default is the size of")
-    print("                   the input pdf file.")
     print("-m|--media         Specify output media paper size. Default: %s."
             % md_dflt)
+    print("-p|--poster        Specify poster size. Default is the size of")
+    print("                   the input pdf file.")
     print("-o|--output        Specifiy output pdf file.")
     print("-f|--force         Ovewrite output file if it exists.")
     print("-c|--cut-margin    Specify cut margins either as percentage of the")
@@ -406,7 +433,7 @@ if __name__ == '__main__':
 
     scriptname = os.path.basename(sys.argv[0])
     author = 'Anjishnu Sarkar'
-    version = '0.10'
+    version = '0.11'
     cut_percent = 5     # In percentage
     media_default = 'a4'
     media_custom = None
