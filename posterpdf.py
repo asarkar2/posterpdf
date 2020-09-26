@@ -406,7 +406,7 @@ if __name__ == '__main__':
 
     scriptname = os.path.basename(sys.argv[0])
     author = 'Anjishnu Sarkar'
-    version = '0.11'
+    version = '0.11.1'
     cut_percent = 5     # In percentage
     media_default = 'a4'
     media_custom = None
